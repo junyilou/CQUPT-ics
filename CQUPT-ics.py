@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # 运行前请修改参数
 studentNum = 2020220202    # 你的学号
 saveLoc    = "cqupt.ics"   # 文件输出目录，可填写相对路径
-mode       = 1             # 模式选择: 1 仅课程，2 仅考试，3 课程+考试
+mode       = 3             # 模式选择: 1 仅课程，2 仅考试，3 课程+考试
 reporting  = True          # 启用多次运行时课表对比功能
 enableGEO  = True          # 启用教学楼定位功能（如不启用，仍可显示教室位置于标题中）
 
@@ -24,7 +24,7 @@ def kebiao():
 		print("课表请求超时")
 	except requests.exceptions.HTTPError as err:
 		errCode = err.response.status_code
-		print("课表请求返回了 HTTP {errCode} 错误")
+		print(f"课表请求返回了 HTTP {errCode} 错误")
 	except:
 		print("课表请求发生了其他网络错误")
 	else:
@@ -43,12 +43,15 @@ def kaoshi():
 		print("考试请求超时")
 	except requests.exceptions.HTTPError as err:
 		errCode = err.response.status_code
-		print("考试请求返回了 HTTP {errCode} 错误")
+		print(f"考试请求返回了 HTTP {errCode} 错误")
 	except:
 		print("考试请求发生了其他网络错误")
 	else:
-		tests = [["TEST", _Test["course"], _Test["begin_time"], _Test["end_time"], _Test["status"], _Test["classroom"], _Test["type"],
+		try:
+			tests = [["TEST", _Test["course"], _Test["begin_time"], _Test["end_time"], _Test["status"], _Test["classroom"], _Test["type"],
 			[int(_Test["week"])], int(_Test["weekday"]), _Test["seat"]] for _Test in ansTable["data"]]
+		except:
+			return [], 0
 		return tests, ansTable["nowWeek"]
 	return [], 0
 
