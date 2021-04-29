@@ -1,3 +1,7 @@
+# Move to https://github.com/qwqVictor/CQUPT-ics
+
+***
+
 ## CQUPT-ics
 
 **重庆邮电大学学生课表 iCal (.ics) 自动生成工具。支持创建日历订阅，支持教学楼定位。**
